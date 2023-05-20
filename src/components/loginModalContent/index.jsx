@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./index.css";
 import image from "./image.png";
 import { FormControl, IconButton, InputAdornment } from "@mui/material";
@@ -8,10 +8,12 @@ import SecondaryGradientButton from "../secondaryGrandientButton";
 import { AddBoxOutlined } from "@mui/icons-material";
 import CustomOutlinedInput from "../customOutlinedInput";
 import PasswordOutlinedInput from "../passwordOutlinedInput";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function LoginModalContent({ setCreateAccountContent }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useContext(UserContext);
 
   return (
     <div className="loginModalContent">
@@ -43,8 +45,15 @@ export default function LoginModalContent({ setCreateAccountContent }) {
             <PasswordOutlinedInput setValue={setPassword} />
           </div>
           <div className="buttonsSection">
-            <PrimaryGradientButton text="Entrar" />
-            <SecondaryGradientButton text="Quero criar uma conta" onClick={setCreateAccountContent} icon={<AddBoxOutlined />} />
+            <PrimaryGradientButton
+              text="Entrar"
+              onClick={() => login({ email, password })}
+            />
+            <SecondaryGradientButton
+              text="Quero criar uma conta"
+              onClick={setCreateAccountContent}
+              icon={<AddBoxOutlined />}
+            />
           </div>
         </FormControl>
       </div>

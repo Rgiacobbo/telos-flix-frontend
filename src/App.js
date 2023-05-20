@@ -1,14 +1,17 @@
 import "./App.css";
 import Header from "./components/header";
+import UserProvider from "./contexts/UserProvider";
 import AppRoutes from "./routes";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <div style={{ marginLeft: "170px" }}>
-        <AppRoutes />
-      </div>
+      <UserProvider>
+        <Header />
+        <div style={{ marginLeft: "170px" }}>
+          <AppRoutes />
+        </div>
+      </UserProvider>
     </div>
   );
 }
