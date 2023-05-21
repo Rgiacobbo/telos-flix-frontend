@@ -1,27 +1,27 @@
 import { SignalCellularAltOutlined } from "@mui/icons-material";
-import React from "react";
+import React, { useContext } from "react";
 import "./index.css";
 import MiniVideoCard from "../miniVideoCard";
+import { Link } from "react-router-dom";
+import { MovieContext } from "../../contexts/MovieContext";
+
 function Trending() {
-  const videos = [
-    {
-      title: "Video 1",
-    },
-    {
-      title: "Video 2",
-    },
-    {
-      title: "Video 3",
-    },
-  ];
+  const [movies, setMovies] = useContext(MovieContext);
+  const trendingMovies = [movies[1], movies[4], movies[9]]; // Pega o segundo, quinto e décimo filme
+
   return (
     <div className="trendingSection">
       <div className="labelSection">
         <SignalCellularAltOutlined /> Em alta
       </div>
       <div className="trendingVideosGrid">
-        {videos.map((video) => (
-          <MiniVideoCard title={video.title}/>
+        {trendingMovies.map((movie) => (
+          <Link style={{
+            textDecoration: "none",
+            color: "#EEEEEE",
+          }} to={`/Movie/${movie._id}`} key={movie.title}>
+            <MiniVideoCard img={movie.image} title={movie.title} />
+          </Link>
         ))}
       </div>
     </div>
@@ -29,3 +29,4 @@ function Trending() {
 }
 
 export default Trending;
+

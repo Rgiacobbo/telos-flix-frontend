@@ -2,26 +2,28 @@ import { CardGiftcardOutlined, SignalCellularAltOutlined } from "@mui/icons-mate
 import React from "react";
 import "./index.css";
 import MiniVideoCard from "../miniVideoCard";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { MovieContext } from "../../contexts/MovieContext";
+
 function EnjoyForFree() {
-  const videos = [
-    {
-      title: "Video 1",
-    },
-    {
-      title: "Video 2",
-    },
-    {
-      title: "Video 3",
-    },
-  ];
+ 
+  const [movies, setMovies] = useContext(MovieContext);
+  const trendingMovies = [movies[5], movies[9], movies[4]]; // Pega o segundo, quinto e décimo filme
+
   return (
     <div className="enjoyForfreeSection">
       <div className="labelSection">
         <CardGiftcardOutlined /> Aproveite grátis
       </div>
       <div className="enjoyForfreeVideosGrid">
-        {videos.map((video) => (
-          <MiniVideoCard title={video.title} />
+      {trendingMovies.map((movie) => (
+          <Link style={{
+            textDecoration: "none",
+            color: "#EEEEEE",
+          }} to={`/Movie/${movie._id}`} key={movie.title}>
+            <MiniVideoCard img={movie.image} title={movie.title} />
+          </Link>
         ))}
       </div>
     </div>

@@ -10,7 +10,7 @@ export default function Video() {
       <div>
         {movies.map((movie, index) => (
           <div>
-            <h5>{movie.Title}</h5>
+            <h5>{movie.title}</h5>
           </div>
         ))}
       </div>
