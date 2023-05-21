@@ -1,20 +1,33 @@
-import React, { useState } from 'react'
-import WatchButton from '../../components/WatchButton'
-import RateButton from '../../components/RateButton'
-import './index.css'
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import WatchButton from '../../components/WatchButton';
+import RateButton from '../../components/RateButton';
+import './index.css';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import Carousel from '../../components/Carosel';
 import RateMovieModal from '../../components/RateMovieModal';
 import CustomizedProgressBars from '../../components/progressBar';
-
+import { MovieContext } from '../../contexts/MovieContext';
 
 function MovieDetails() {
     const [open, setOpen] = useState(false);
-  return (
-    <div className='bodyMovieInformations'>
+    const [movies] = useContext(MovieContext);
+  
+    const { id } = useParams(); // Obtém o ID do filme da rota
+  
+    // Encontra o filme correspondente com base no ID
+    const movie = movies.find((movie) => movie._id === id);
+  
+    if (!movie) {
+      return <div>Carregando...</div>; // Lógica de tratamento quando o filme não for encontrado
+    }
+  
+    return (
+      <div className='bodyMovieInformations'>
         <div className='VideoCard'>
-            <h1 className='MovieTitle'>
-                Nome do Filme</h1>
+          <h1 className='MovieTitle'>
+            {movie.title} {/* Exibe o nome do filme */}
+          </h1>
 
             <div className='VideoCard__buttons'>
             <WatchButton/>
