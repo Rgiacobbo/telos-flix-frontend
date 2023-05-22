@@ -46,6 +46,7 @@ export default function UserProvider({ children }) {
   const values = {
     login: login,
     createAccount: createAccount,
+
     userProvider: userProvider,
     savedUser: JSON.parse(savedUser),
   };
