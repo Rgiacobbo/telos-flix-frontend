@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -22,6 +22,8 @@ import AppBarActions from "../appBarActions";
 import CustomModal from "../customModal";
 import LoginModalContent from "../loginModalContent";
 import CreateAccountModalContent from "../createAccountModalContent";
+import { UserContext } from "../../contexts/UserContext";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -77,27 +79,33 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-    boxSizing: "border-box",
-    ...(open && {
-      ...openedMixin(theme),
-      "& .MuiDrawer-paper": openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      "& .MuiDrawer-paper": closedMixin(theme),
-    }),
-  })
-);
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
 
 export default function Header() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [contentToShow, setContentToShow] = useState(<></>);
+  const { savedUser } = useContext(UserContext);
+  useEffect(() => {
+    if (savedUser) {
+      setOpen(false);
+    }
+  }, [savedUser]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -110,34 +118,41 @@ export default function Header() {
           }}
         >
           <img src={logo} alt="logo" />
-          <AppBarActions
-            actions={[
-              <CreateAccountButton
-                onClick={() => {
-                  setContentToShow(<CreateAccountModalContent />);
-                  setOpen(true);
-                }}
-              />,
-              <LoginButton
-                onClick={() => {
-                  setContentToShow(
-                    <LoginModalContent
-                      setCreateAccountContent={() => {
-                        setContentToShow(<CreateAccountModalContent />);
-                      }}
-                    />
-                  );
-                  setOpen(true);
-                }}
-              />,
-            ]}
-          />
+          {savedUser?.name}
+          {!savedUser?.name && (
+            <AppBarActions
+              actions={[
+                <CreateAccountButton
+                  onClick={() => {
+                    setContentToShow(<CreateAccountModalContent />);
+                    setOpen(true);
+                  }}
+                />,
+                <LoginButton
+                  onClick={() => {
+                    setContentToShow(
+                      <LoginModalContent
+                        setCreateAccountContent={() => {
+                          setContentToShow(<CreateAccountModalContent />);
+                        }}
+                      />
+                    );
+                    setOpen(true);
+                  }}
+                />,
+              ]}
+            />
+          )}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent">
         <DrawerHeader>
           <IconButton sx={{ color: "#fff" }}>
-            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === "rtl" ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
           </IconButton>
         </DrawerHeader>
 

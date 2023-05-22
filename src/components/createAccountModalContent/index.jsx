@@ -1,10 +1,22 @@
-import { Checkbox, FormControl, FormControlLabel, IconButton, InputAdornment } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import React, { useContext, useState } from "react";
 import CustomOutlinedInput from "../customOutlinedInput";
-import { EmailOutlined, PersonOutlined, PhoneOutlined } from "@mui/icons-material";
+import {
+  EmailOutlined,
+  PersonOutlined,
+  PhoneOutlined,
+} from "@mui/icons-material";
 import PasswordOutlinedInput from "../passwordOutlinedInput";
 import PrimaryGradientButton from "../primaryGrandientButton";
 import "./index.css";
+import { UserContext } from "../../contexts/UserContext";
+
 function CreateAccountModalContent() {
   const [name, setname] = useState("");
   const [email, setEmail] = useState("");
@@ -12,6 +24,7 @@ function CreateAccountModalContent() {
   const [birthDate, SetBirthDate] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { createAccount } = useContext(UserContext);
 
   return (
     <div className="createAccountModalContent">
@@ -81,7 +94,10 @@ function CreateAccountModalContent() {
           </div>
           <div className="inputContainer" style={{ marginTop: "46px" }}>
             <label className="inputLabel">Confirmar Senha</label>
-            <PasswordOutlinedInput setValue={setConfirmPassword} placeholder="Confirmar Senha" />
+            <PasswordOutlinedInput
+              setValue={setConfirmPassword}
+              placeholder="Confirmar Senha"
+            />
           </div>
           <FormControlLabel
             sx={{ marginTop: "42px" }}
@@ -89,7 +105,19 @@ function CreateAccountModalContent() {
             label="Aceito os termos de uso da plataforma"
           />
           <div className="buttonsSection">
-            <PrimaryGradientButton text="Entrar" />
+            <PrimaryGradientButton
+              text="Entrar"
+              onClick={() =>
+                createAccount({
+                  name,
+                  email,
+                  phone,
+                  birthDate,
+                  password,
+                  confirmPassword,
+                })
+              }
+            />
           </div>
         </FormControl>
       </div>
