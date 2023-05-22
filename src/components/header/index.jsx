@@ -23,6 +23,7 @@ import CustomModal from "../customModal";
 import LoginModalContent from "../loginModalContent";
 import CreateAccountModalContent from "../createAccountModalContent";
 import { UserContext } from "../../contexts/UserContext";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
