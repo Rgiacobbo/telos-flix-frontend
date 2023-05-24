@@ -18,7 +18,7 @@ const style = {
   height: "551px",
 };
 
-export default function RateMovieModal({open, setOpen,  postComment }) {
+export default function RateMovieModal({open, setOpen}) {
   
   const handleClose = () => setOpen(false);
 
@@ -32,7 +32,7 @@ export default function RateMovieModal({open, setOpen,  postComment }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <RateMovieModalContent postComment={postComment}/>
+          <RateMovieModalContent/>
         </Box>
       </Modal>
     </div>
