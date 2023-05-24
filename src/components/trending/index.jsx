@@ -16,11 +16,15 @@ function Trending() {
       </div>
       <div className="trendingVideosGrid">
         {trendingMovies.map((movie) => (
-          <Link style={{
-            textDecoration: "none",
-            color: "#EEEEEE",
-          }} to={`/Movie/${movie._id}`} key={movie.title}>
-            <MiniVideoCard img={movie.image} title={movie.title} />
+          <Link
+            style={{
+              textDecoration: "none",
+              color: "#EEEEEE",
+            }}
+            to={`/Movie/${movie?._id}`}
+            key={movie?.title}
+          >
+            <MiniVideoCard img={movie?.image} title={movie?.title} />
           </Link>
         ))}
       </div>
@@ -29,4 +33,3 @@ function Trending() {
 }
 
 export default Trending;
-
