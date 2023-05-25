@@ -24,7 +24,8 @@ function MovieDetails() {
 
   return (
     <div className="bodyMovieInformations">
-      <div className="VideoCard">
+      <div className="VideoCard" style={{ backgroundImage: `url(${movie?.image})`, backgroundSize: "cover",
+  backgroundPosition: "center",}}>
         <h1 className="MovieTitle">
           {movie?.title} {/* Exibe o nome do filme */}
         </h1>
